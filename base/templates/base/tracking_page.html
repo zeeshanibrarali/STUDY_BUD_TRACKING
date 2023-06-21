@@ -1,0 +1,91 @@
+{% load static %}
+
+<!-- Include necessary CSS and JavaScript files -->
+<link rel="stylesheet" href="{% static 'styles/tracking_page.css' %}">
+<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<script src="{% static 'styles/tracking_page.js' %}"></script>
+
+
+<div class="container">
+  <!-- Activity Input Form -->
+  {% include 'base/tracking_form.html' %}
+  <!-- Activity List -->
+      <ul id="activity-list">
+    {% for activity in activities %}
+      <li>
+        <div class="activity-details">
+          <span class="title">{{ activity.activity_category.name }}</span>
+          <span class="category">{{ activity.activity_category }}</span>
+          <span class="date">{{ activity.timestamp }}</span>
+          <span class="description">{{ activity.additional_info|truncatewords:5 }}</span>
+        </div>
+        <span class="rating">{{ activity.rating }}</span>
+        <div class="buttons">
+          <button class="edit-btn" data-id="{{ activity.activity_log_id }}">Edit</button>
+          <a href="{% url 'delete-activity' activity.activity_log_id %}" class="delete-btn"
+             data-id="{{ activity.activity_log_id }}">Delete</a>
+
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+
+
+  <!-- Progress Overview -->
+  <div id="progress-bar">
+    <div class="progress" style="width: 50%;">50%</div>
+  </div>
+  <div id="statistics">
+    <p>Total Activities: {{ activities.count }}</p>
+    <p>Average Sustainability Rating: {{ activities.average_rating }}</p>
+  </div>
+
+  <!-- Filters and Sorting Options -->
+  <div id="filters">
+    <label for="category-filter">Category:</label>
+    <select id="category-filter">
+      <option value="">All</option>
+      {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+    <label for="date-filter">Date Range:</label>
+    <input type="date" id="date-filter-start" name="date-filter-start">
+    <input type="date" id="date-filter-end" name="date-filter-end">
+    <label for="sorting">Sorting:</label>
+    <select id="sorting">
+      <option value="date">Date</option>
+      <option value="rating">Sustainability Rating</option>
+      <option value="title">Title</option>
+    </select>
+  </div>
+
+  <!-- Analytics and Insights -->
+  <canvas id="activity-chart"></canvas>
+
+  <!-- Goal Setting -->
+  <form id="goal-form">
+    <div class="form-group">
+      <label for="goal">Set Sustainable Goal:</label>
+      <input type="text" id="goal" name="goal" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="deadline">Deadline:</label>
+      <input type="date" id="deadline" name="deadline" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Goal</button>
+  </form>
+  <div id="goal-overview">
+    <h3>Goal Overview</h3>
+    <ul>
+      <li>Goal 1</li>
+      <li>Goal 2</li>
+    </ul>
+  </div>
+  <div id="progress-tracking">
+    <h3>Progress Tracking</h3>
+    <div class="progress" style="width: 70%;">70%</div>
+  </div>
+
+</div>

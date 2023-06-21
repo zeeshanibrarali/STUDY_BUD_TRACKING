@@ -1,0 +1,238 @@
+/* Custom CSS for Tracking Page */
+
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #36393f;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.branding {
+  font-size: 24px;
+  font-weight: bold;
+  color: #7289da;
+}
+
+.navigation {
+  display: flex;
+  gap: 10px;
+}
+
+.navigation a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Form Styles */
+form {
+  background-color: #40444b;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #36393f;
+  color: #fff;
+  border: none;
+  resize: vertical;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #36393f;
+  color: #fff;
+  border: none;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+textarea {
+  height: 100px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #7289da;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5a68a2;
+}
+
+/* Activity List Styles */
+ul#activity-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #40444b;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+li .title {
+  font-weight: bold;
+}
+
+li .category {
+  color: #7289da;
+}
+
+li .edit-btn,
+li .delete-btn {
+  background-color: #7289da;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+li .edit-btn:hover,
+li .delete-btn:hover {
+  background-color: #5a68a2;
+}
+
+/* Progress Overview Styles */
+#progress-bar {
+  background-color: #36393f;
+  height: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+#progress-bar .progress {
+  background-color: #7289da;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  text-align: center;
+  line-height: 20px;
+}
+
+#statistics {
+  background-color: #40444b;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Filters and Sorting Options Styles */
+#filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#filters label,
+#filters select,
+#filters input[type="date"] {
+  color: #fff;
+}
+
+/* Analytics and Insights Styles */
+#activity-chart {
+  margin-bottom: 20px;
+}
+
+/* Goal Setting Styles */
+#goal-form {
+  background-color: #40444b;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+#goal-overview {
+  background-color: #40444b;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+#progress-tracking {
+  background-color: #36393f;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Achievements and Rewards Styles */
+
+/* Community Engagement Styles */
+
+/* Footer Styles */
+footer {
+  padding-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #7289da;
+}
+
+/* Responsive Styles */
+@media (max-width: 767px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .branding {
+    margin-bottom: 10px;
+  }
+
+  .navigation {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navigation a {
+    display: block;
+  }
+}
