@@ -5,6 +5,99 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import Room, Topic, Message, User
+from .forms import RoomForm, UserForm, MyUserCreationForm, ActivityLogForm
+
+# charts
+from django.views import View
+from .models import ActivityLog, ActivityCategory
+
+
+class TrackingForm(View):
+    def get(self, request):
+        form = ActivityLogForm()
+        categories = ActivityCategory.objects.all()
+
+        context = {
+            'form': form,
+            'categories': categories,
+        }
+        return render(request, 'base/tracking_form.html', context)
+
+    def post(self, request):
+        form = ActivityLogForm(request.POST)
+
+        if form.is_valid():
+            activity = form.save(commit=False)
+            activity.user = request.user
+            activity.save()
+            messages.success(request, 'Activity logged successfully.')
+            return redirect('tracking')
+        else:
+            categories = ActivityCategory.objects.all()
+            context = {
+                'form': form,
+                'categories': categories,
+            }
+            error_messages = form.errors.get_json_data()
+            for field, errors in error_messages.items():
+                for error in errors:
+                    messages.error(request, f"{field.capitalize()}: {error['message']}")
+
+            return render(request, 'base/tracking_form.html', context)
+
+
+@login_required(login_url='login')
+def deleteActivity(request, pk):
+    Activity = ActivityLog.objects.get(id=pk)
+
+    if request.user != Activity.user:
+        return HttpResponse('You are not allowed here!!')
+
+    if request.method == 'POST':
+        Activity.delete()
+        return redirect('tracking')
+
+    return render(request, 'base/delete.html', {'obj': Activity})
+
+
+def loginPage(request):
+    page = 'login'
+    if request.user.is_authenticated:
+        return redirect('home')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'User does not exist.')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username or password does not exist.')
+
+    context = {'page': page}
+    return render(request, 'base/login_register.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('home')
+
+
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    rooms = user.room_set.all()
+    room_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    context = {'user': user, 'rooms': rooms, 'room_messages': room_messages, 'topics': topics}
+    return render(request, 'base/profile.html', context)
+
 
 
 
